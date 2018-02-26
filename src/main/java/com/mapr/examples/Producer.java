@@ -25,14 +25,14 @@ public class Producer {
         }
 
         try {
-            for (int i = 0; i < 1000000; i++) {
+            for (int i = 0; i < 100000; i++) {
                 // send lots of messages
                 producer.send(new ProducerRecord<String, String>(
                         "fast-messages",
-                        String.format("{\"type\":\"test\", \"t\":%.3f, \"k\":%d}", System.nanoTime() * 1e-9, i)));
+                        String.format("{\"type\":\"test\", \"idx\": \"%d\", \"t\":%.3f, \"k\":%d}", i, System.nanoTime() * 1e-9, i)));
 
                 // every so often send to a different topic
-                if (i % 1000 == 0) {
+                if (i % 10 == 0) {
                     producer.send(new ProducerRecord<String, String>(
                             "fast-messages",
                             String.format("{\"type\":\"marker\", \"t\":%.3f, \"k\":%d}", System.nanoTime() * 1e-9, i)));

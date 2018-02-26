@@ -59,6 +59,11 @@ public class Consumer {
                                 long latency = (long) ((System.nanoTime() * 1e-9 - msg.get("t").asDouble()) * 1000);
                                 stats.recordValue(latency);
                                 global.recordValue(latency);
+                                if (msg.get("idx").asInt() == 11) {
+                                    System.out.println(String.format("Error procesing indx: %d", msg.get("idx").asInt()));
+                                    System.out.println(record.toString());
+//                                    throw new IllegalArgumentException("Error");
+                                }
                                 break;
                             case "marker":
                                 // whenever we get a marker message, we should dump out the stats
